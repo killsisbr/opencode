@@ -1,0 +1,20 @@
+Run a verification script and return the result.
+
+The verification script is expected to output a line like:
+    TESTS PASS=<pass> FAIL=<fail>
+and exit with 0 if all tests pass, non-zero otherwise.
+
+The tool returns an object with:
+    status: "PASS" | "FAIL" | "ERROR"
+    passed: number of tests passed
+    failed: number of tests failed
+    summary: short summary of the output (truncated to 200 chars)
+    ... (optional: expected, actual, failureType)
+
+If the script is not found or fails to run, status is "ERROR".
+
+Example usage:
+    verify({ scriptPath: "./check.mjs" })
+
+Note: The agent should not have to discover where the test is. The harness should set the context
+      so that the default scriptPath ("./check.mjs") points to the correct check.
